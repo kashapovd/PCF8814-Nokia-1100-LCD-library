@@ -6,7 +6,7 @@ This is an arduino library for monochrome LCD based on PCF8814 driver. This libr
 
 PCF8814 supports I²C, 4-wire and 3-wire SPI interfaces to communicate. 
 In this library used 3-wire SPI (just software by bitbanging, hardware in the future). 
-My LCD version (from the phone Nokia 1100) doesn't have 4-wire SPI and I²C outputs.
+My LCD version (from the legendary Nokia 1100) doesn't have 4-wire SPI and I²C outputs.
 
 #### PCF8814:
 
@@ -24,6 +24,12 @@ My LCD version (from the phone Nokia 1100) doesn't have 4-wire SPI and I²C outp
            7 LED+           | |_________________| |
            8 unused          \___________________/
 
+## Compatibility 
+| Platform                  | SPI       | fps      |
+| ------------------------- |:---------:| --------:|
+| Atmega328 based arduinos  | software  |  about 7 |
+| ESP8266 based platforms   | software  | about 39 |
+
 ## How to use it
 
 PCF8814 library depends by Adafruit GFX library and you must install Adafruit GFX for your IDE.
@@ -34,6 +40,9 @@ If you use Platformio IDE just add the following text in your platformio.ini:
     lib_deps=
         https://github.com/kashapovd/Nokia-LCD-PCF8814-library
         https://github.com/adafruit/Adafruit-GFX-Library
+
+## Demonstration ([video](https://youtu.be/tWlndlFdpFo))
+![PCF8814 LCD TEST](demo/demo.gif)
 
 Kashapov Yaroslav, 2020\
 feedback: [telegram](https://t.me/kashapovd), <y.kashapovd@gmail.com>
