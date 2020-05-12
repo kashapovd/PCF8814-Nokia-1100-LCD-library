@@ -81,7 +81,7 @@ void PCF8814::hardreset() {
 }
 
 // bitbang spi
-void PCF8814::spiwrite(uint8_t type, uint8_t byte) {
+inline void PCF8814::spiwrite(uint8_t type, uint8_t byte) {
 
     CLRCS(_sce);
     DC(_sdin, type);  // next byte data is data or cmd
@@ -116,18 +116,19 @@ void PCF8814::begin() {
     hardreset();
     spiwrite(PCF8814_CMD,PCF8814_POWER_CONTROL|CHARGE_PUMP_ON);
     spiwrite(PCF8814_CMD,PCF8814_FRAME_FREQ_H);
-    spiwrite(PCF8814_CMD,FREQ_L_H80);   // 60Hz frame frequency
+    spiwrite(PCF8814_CMD,PCF8814_ADDRESSING_MODE | HORIZONTAL);
+    spiwrite(PCF8814_CMD,PCF8814_TCOMPENSATION | COMP_EN); // enable temerature compensation
+    spiwrite(PCF8814_CMD,FREQ_L_H80);   // 80Hz frame frequency
     spiwrite(PCF8814_CMD,PCF8814_INTERNAL_OSCILL); // use internal oscillator
     spiwrite(PCF8814_CMD,PCF8814_CHARGE_PUMP_H);
     spiwrite(PCF8814_CMD,PUMP_L_x2);
     spiwrite(PCF8814_CMD,PCF8814_SYSTEM_BIAS);
     spiwrite(PCF8814_CMD,PCF8814_VOP_H|0x04); // default
-    spiwrite(PCF8814_CMD,PCF8814_VOP_L|0x10); // contrast
-    spiwrite(PCF8814_CMD,PCF8814_TCOMPENSATION | COMP_EN); // enable temerature compensation
-    spiwrite(PCF8814_CMD,PCF8814_ADDRESSING_MODE | HORIZONTAL);
+    spiwrite(PCF8814_CMD,PCF8814_VOP_L|0x10); // contrast  
     //spiwrite(PCF8814_CMD,PCF8814_YADDR);
     //spiwrite(PCF8814_CMD,PCF8814_XADDR_L);
     //spiwrite(PCF8814_CMD,PCF8814_XADDR_H);
+    display();
     spiwrite(PCF8814_CMD,PCF8814_DISPLAY_MODE | ON);
     spiwrite(PCF8814_CMD,PCF8814_DISPLAY_MODE | ALLON);
 }
@@ -171,6 +172,12 @@ void PCF8814::display() {
 //                     FEEDBACK FUNCTIONS                       //   
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
+uint8_t PCF8814::getPixel(const uint8_t x, const uint8_t y) {
+    if ((x >= 0 && x < PCF8814_WIDTH) 
+    && (y >= 0 && y < PCF8814_HEIGHT)) {
+        return ((1>>y%8) & _buffer[x + (y/8) * PCF8814_WIDTH]);
+    }  
+}
 /**************************************************************/
 /** @brief Get memory pointer to the framebuffer
     @return Pointer to the first framebuffer's element 

@@ -139,6 +139,7 @@ class PCF8814 : public Adafruit_GFX
         void display(void);
         uint8_t *getBuffer(void);
         uint16_t getBufferSize(void);
+        uint8_t getPixel(const uint8_t x, const uint8_t y);
         void pushBuffer(uint8_t *buffer, uint16_t size);
         void drawPixel (int16_t x, int16_t y, 
                      uint16_t color); 
