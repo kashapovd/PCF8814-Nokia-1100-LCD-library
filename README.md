@@ -25,7 +25,7 @@ My LCD version (from the legendary Nokia 1100) doesn't have 4-wire SPI and I²C 
            8 unused          \___________________/
 
 ## Compatibility 
-| Platform                  | SPI       | fps      |
+| Tested with               | SPI       | fps      |
 | ------------------------- |:---------:| --------:|
 | Atmega328 based arduinos  | software  |  about 7 |
 | ESP8266 based platforms   | software  | about 39 |
@@ -38,7 +38,7 @@ If you use Arduino IDE add PCF8814 and Adafruit GFX libraries via "Sketch -> Inc
 If you use Platformio IDE just add the following text in your platformio.ini:
 
     lib_deps=
-        https://github.com/kashapovd/Nokia-LCD-PCF8814-library
+        https://github.com/kashapovd/PCF8814-Nokia-1100-LCD-library
         https://github.com/adafruit/Adafruit-GFX-Library
 
 ## Demonstration ([video](https://youtu.be/tWlndlFdpFo))
