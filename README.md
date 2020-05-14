@@ -27,7 +27,7 @@ My LCD version (from the legendary Nokia 1100) doesn't have 4-wire SPI and I²C 
 ## Compatibility 
 | Tested with               | SPI       | fps      |
 | ------------------------- |:---------:| --------:|
-| Atmega328 based arduinos  | software  |  about 7 |
+| Atmega328 based arduinos  | software  | about 14 |
 | ESP8266 based platforms   | software  | about 39 |
 
 ## How to use it
