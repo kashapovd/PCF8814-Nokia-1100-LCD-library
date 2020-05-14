@@ -46,9 +46,17 @@
 #define COLUMNS                 PCF8814_WIDTH
 #define PAGES                   PCF8814_BYTES_CAPACITY / COLUMNS
 
-#define SETPIN(pin)             digitalWrite(pin, HIGH)
-#define CLRPIN(pin)             digitalWrite(pin, LOW)
-#define DC(pin, type)           digitalWrite(pin, type)
+#if defined(ARDUINO) && ARDUINO >= 100
+    #define SETPIN(pin)         *(portOutputRegister(digitalPinToPort(pin))) |= digitalPinToBitMask(pin)
+    #define CLRPIN(pin)         *(portOutputRegister(digitalPinToPort(pin))) &= ~digitalPinToBitMask(pin)
+    #define DC(pin, type)       (type) ? SETPIN(pin):CLRPIN(pin);
+#else
+    #define SETPIN(pin)         digitalWrite(pin, HIGH)
+    #define CLRPIN(pin)         digitalWrite(pin, LOW)
+    #define DC(pin, type)       digitalWrite(pin, type)
+#endif
+#define SETRST(pin)             SETPIN(pin)
+#define CLRRST(pin)             CLRPIN(pin)
 #define SETMOSI(pin)            SETPIN(pin) 
 #define CLRMOSI(pin)            CLRPIN(pin)
 #define SETCS(pin)              SETPIN(pin) 
@@ -74,9 +82,9 @@ PCF8814::PCF8814(const uint8_t sce, const uint8_t sclk,
 /**************************************************************/
 void PCF8814::hardreset() {
 
-    digitalWrite(_rst, LOW);            // Bring reset low
+    CLRRST(_rst);            // Bring reset low
     delay(10);                           // Wait 10ms
-    digitalWrite(_rst, HIGH);           // Bring out of reset
+    SETRST(_rst);         // Bring out of reset
     delay(10);                           // Wait 10ms
 }
 
@@ -95,6 +103,7 @@ inline void PCF8814::spiwrite(uint8_t type, uint8_t byte) {
     SETCS(_sce);
 }
 
+
 void PCF8814::setXY(const uint8_t x, const uint8_t y) {
     
     spiwrite(PCF8814_CMD,PCF8814_XADDR_L | (x & 0b00001111));
@@ -108,6 +117,7 @@ void PCF8814::begin() {
     pinMode(_sclk, OUTPUT);
     pinMode(_sce, OUTPUT);
     pinMode(_rst, OUTPUT);
+
     SETCS(_sce);
     SETCLK(_sclk);
 
