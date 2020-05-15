@@ -6,22 +6,23 @@
  * @section Introduction
  *
  *  PCF8814 supports I²C, 4-wire and 3-wire SPI interfaces to communicate. 
- *  In this library used 3-wire SPI. 
+ *  In this library used 3-wire SPI (just software, hardware in the future). 
  *  My LCD version (from the phone Nokia 1100) doesn't have 4-wire SPI and I²C.
  *
  *  PCF8814:
  *      - resolution: 96x65 
- *      - on-chip display data RAM (96x65 = 6240 bit)
+ *      - on-chip display data RAM (96x65 = 6240 bits)
  *      - pinout:
- *                               _
- *          1 Vcc +3.3v         / _______________________ \ 
- *          2 none             | |                       | |
- *          3 I²C SDA          | | PCF8814 LCD from 1100 | |
- *          4 I²C SCL          | |                       | |
- *          5 A0               | |         96x65         | |
- *          6 GND              | |_______________________| |
- *          7 VLCD              \_________________________/
- *          8 RESET               
+ * 
+ *          1 RESET             1 2 3 4 5 6 7 8 9
+ *          2 SCE              _|_|_|_|_|_|_|_|_|_
+ *          3 GND             / _________________ \ 
+ *          4 SDIN           | |                 | |
+ *          4 SCLK           | |   PCF8814 LCD   | |
+ *          5 VDDI           | |    from 1100    | |
+ *          6 VDD            | |      96x65      | |
+ *          7 LED+           | |_________________| |
+ *          8 unused          \___________________/             
  * 
  * @section Dependencies
  *
