@@ -121,7 +121,6 @@ class PCF8814 : public Adafruit_GFX
         void setXY (const uint8_t x, const uint8_t y);
         // pins:
         int8_t _sce, _sclk, _sdin, _rst;
-        uint8_t *_buffer;   
             
     public:
 

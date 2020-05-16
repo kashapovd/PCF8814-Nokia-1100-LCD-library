@@ -47,7 +47,7 @@
 #define PAGES                   PCF8814_BYTES_CAPACITY / COLUMNS
 
 #if defined(ARDUINO) && ARDUINO >= 100  
-    // two times faster than standard digitalWrite(), estimated +7-8 fps 
+    // faster than standard digitalWrite(), estimated +7-8 fps 
     #define SETPIN(pin)         *(portOutputRegister(digitalPinToPort(pin))) |= digitalPinToBitMask(pin)
     #define CLRPIN(pin)         *(portOutputRegister(digitalPinToPort(pin))) &= ~digitalPinToBitMask(pin)
     #define DC(pin, type)       (type) ? SETPIN(pin):CLRPIN(pin);
@@ -67,8 +67,10 @@
 #define TGLCLK(pin)             CLRCLK(pin);\
                                 SETCLK(pin)
 
+uint8_t _buffer[PCF8814_BYTES_CAPACITY];
+
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-//                  CONSTRUCTOR & DESTRUCTOR                    //   
+//                        CONSTRUCTOR                           //   
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
 PCF8814::PCF8814(const uint8_t sce, const uint8_t sclk, 
@@ -78,7 +80,6 @@ PCF8814::PCF8814(const uint8_t sce, const uint8_t sclk,
     _sclk = sclk;
     _sdin = sdin;
     _rst = rst;
-    _buffer = nullptr;
 }
 
 /**************************************************************/
@@ -139,7 +140,6 @@ void PCF8814::begin() {
     SETCS(_sce);
     SETCLK(_sclk);
 
-    _buffer = (uint8_t *)malloc(PCF8814_BYTES_CAPACITY);
     clearDisplay(); // clear the whole buffer
     hardreset();
     spiwrite(PCF8814_CMD,PCF8814_POWER_CONTROL|CHARGE_PUMP_ON);
@@ -227,7 +227,7 @@ uint8_t PCF8814::getPixel(const uint8_t x, const uint8_t y) {
 */
 /**************************************************************/
 uint8_t *PCF8814::getBuffer(void) { 
-    return _buffer; 
+    return _buffer;
 }
 
 /**************************************************************/
