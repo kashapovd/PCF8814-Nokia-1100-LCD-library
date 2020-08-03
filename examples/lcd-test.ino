@@ -1,13 +1,13 @@
 /**************************************************************************
- This is an example for Monochrome LCD based on PCF8814 drivers.
- This example is for a 95x65 pixel display using 3-Wire SPI to communicate.
- Thanks fo Adafruit!
+ This is an example for Monochrome LCD based on PCF8814 drivers using 
+ 3-Wire SPI to communicate.
  **************************************************************************/
 
 #include <Adafruit_GFX.h>
 #include <PCF8814.h>
 
-// 10 - cs(sce), 13 - clk(sclk), 11 - mosi(sdin), 12 - reset
+// bitbang spi:
+// PCF8814 display(rst, sce, clk, mosi)
 PCF8814 display(10,13,11,12);
 
 #define NUMFLAKES     10 // Number of snowflakes in the animation example
