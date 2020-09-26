@@ -7,7 +7,7 @@
 #include <PCF8814.h>
 
 // bitbang spi:
-// PCF8814 display(rst, sce, clk, mosi)
+// PCF8814 display(ce, clk, mosi, rst)
 PCF8814 display(10,13,11,12);
 
 #define NUMFLAKES     10 // Number of snowflakes in the animation example
