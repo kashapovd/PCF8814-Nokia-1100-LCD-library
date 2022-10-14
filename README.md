@@ -46,4 +46,4 @@ If you use Platformio IDE just add the following text in your platformio.ini:
 ![PCF8814 LCD TEST](demo/demo.gif)
 
 Kashapov Yaroslav, 2020\
-feedback: [telegram](https://t.me/kashapovd), <y.kashapovd@gmail.com>
+feedback: [telegram](https://t.me/kashapovd), <iam@kashapovd.xyz>
